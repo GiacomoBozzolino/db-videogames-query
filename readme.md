@@ -5,68 +5,68 @@ SELECT
 1- Selezionare tutte le software house americane (3)
 ```sql
     SELECT * FROM `software_houses`
-    WHERE `country` LIKE "United States"
+    WHERE `country` LIKE "United States";
 
 ```
 
 2- Selezionare tutti i giocatori della cittÃ di 'Rogahnland' (2)
 ```sql
     SELECT * FROM players
-    WHERE city LIKE "Rogahnland"
+    WHERE city LIKE "Rogahnland";
 ```
 
 3- Selezionare tutti i giocatori il cui nome finisce per "a" (220)
 ```sql
     SELECT * FROM players
-    WHERE name LIKE "%a"
+    WHERE name LIKE "%a";
 ```
 
 4- Selezionare tutte le recensioni scritte dal giocatore con ID = 800 (11)
 ```sql
     SELECT * FROM reviews
-    WHERE player_id LIKE 800
+    WHERE player_id LIKE 800;
 
 ```
 
 5- Contare quanti tornei ci sono stati nell'anno 2015 (9)
 ```sql
     SELECT * FROM tournaments
-    WHERE year LIKE 2015
+    WHERE year LIKE 2015;
 
 ```
 
 6- Selezionare tutti i premi che contengono nella descrizione la parola 'facere' (2)
 ```sql
     SELECT * FROM awards
-    where description LIKE "%facere%"
+    where description LIKE "%facere%";
 
 ```
 
 7- Selezionare tutti i videogame che hanno la categoria 2 (FPS) o 6 (RPG), mostrandoli una sola volta (del videogioco vogliamo solo l'ID) (287)
 ```sql
     SELECT DISTINCT videogame_id FROM `category_videogame`
-    WHERE category_id = 2 OR category_id = 6
+    WHERE category_id = 2 OR category_id = 6;
 
 ```
 
 8- Selezionare tutte le recensioni con voto compreso tra 2 e 4 (2947)
 ```sql
     SELECT* from reviews
-    WHERE rating BETWEEN 2 AND 4
+    WHERE rating BETWEEN 2 AND 4;
 
 ```
 
 9- Selezionare tutti i dati dei videogiochi rilasciati nell'anno 2020 (46)
 ```sql
     SELECT* FROM videogames
-    WHERE YEAR(release_date) = 2020
+    WHERE YEAR(release_date) = 2020;
 
 ```
 
 10- Selezionare gli id videogame che hanno ricevuto almeno una recensione da 5 stelle, mostrandoli una sola volta (443)
 ```sql
     SELECT DISTINCT videogame_id FROM reviews
-    WHERE rating = 5
+    WHERE rating = 5;
 
 ```
 
@@ -83,7 +83,7 @@ SELECT
 12- Selezionare il numero di videogame che la software house con ID = 1 ha rilasciato nel 2018 (13)
 ```sql
     SELECT COUNT(id) as 'numero_videogiochi' FROM videogames
-    WHERE software_house_id = 1 AND YEAR(release_date)= 2018
+    WHERE software_house_id = 1 AND YEAR(release_date)= 2018;
 
 ```
 
@@ -93,31 +93,50 @@ GROUP BY
 
 1- Contare quante software house ci sono per ogni paese (3)
 ```sql
+    SELECT country, COUNT(*) AS 'numero_software_house' 
+    FROM software_houses
+    GROUP BY country;
 
 ```
 
 2- Contare quante recensioni ha ricevuto ogni videogioco (del videogioco vogliamo solo l'ID) (500)
 ```sql
+    SELECT videogame_id, COUNT(*) AS 'numero_recensioni' from reviews
+    GROUP BY videogame_id;
 
 ```
 
 3- Contare quanti videogiochi hanno ciascuna classificazione PEGI (della classificazione PEGI vogliamo solo l'ID) (13)
 ```sql
+    SELECT pegi_label_id, COUNT(*) AS 'numero_videogiochi' 
+    FROM pegi_label_videogame
+    GROUP BY pegi_label_id;
 
 ```
 
 4- Mostrare il numero di videogiochi rilasciati ogni anno (11)
 ```sql
+    SELECT YEAR(release_date), COUNT(*) AS 'numero_videogames'
+    FROM videogames
+    GROUP BY YEAR(release_date);
 
 ```
 
 5- Contare quanti videogiochi sono disponbiili per ciascun device (del device vogliamo solo l'ID) (7)
 ```sql
+    SELECT device_id, COUNT(*) AS 'numero_videogames'
+    FROM device_videogame
+    GROUP by device_id;
 
 ```
 
 6- Ordinare i videogame in base alla media delle recensioni (del videogioco vogliamo solo l'ID) (500)
 ```sql
+
+    SELECT videogame_id, AVG(rating) as 'mediaRecensioni'
+    FROM reviews
+    GROUP BY videogame_id
+    ORDER BY mediaRecensioni DESC;
 
 ```
 
